@@ -37,8 +37,7 @@ def book_list(request):
     return render(request, 'book_list.html', {'range': range(10)})
 
 def book(request, num):
-    book_text = f'book {num}번 페이지 입니다.'
-    return render(request, 'book', {'num' : num})
+    return render(request, 'book.html', {'num' : num})
 
 def language(request, leng):
     return HttpResponse(f'<h1>{leng} 언어 페이지 입니다.</h1>')
