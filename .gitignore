@@ -2,4 +2,4 @@
 **/db.sqlite3
 **/.python-version
 **/.idea/
-.idea/
+.idea/*
