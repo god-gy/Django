@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "oz-bookmark"
+name = "bookmark"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.12"
 django = "5.0.3"
 dotenv = "^0.9.9"
+ipython = "^9.8.0"
+django-extensions = "^4.1"
 
 
 [build-system]

@@ -19,6 +19,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.urls import path
 
+from bookmark import views
 
 movie_list = [
     {'title' : '파묘', 'director' : '장재현'},
@@ -62,10 +63,12 @@ def movie_detail(request, index):
 # path 순서대로 읽음, str은 주의해서 사용하길.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
-    path('book_list/', book_list),
-    path('book_list/<int:num>/', book),
-    path('language/<str:leng>/', language),
-    path('movie/', movies),
-    path('movie/<int:index>/', movie_detail),
+    # path('', index),
+    # path('book_list/', book_list),
+    # path('book_list/<int:num>/', book),
+    # path('language/<str:leng>/', language),
+    # path('movie/', movies),
+    # path('movie/<int:index>/', movie_detail),
+    path('bookmark/', views.bookmark_list),
+    path('bookmark/<int:pk>/', views.bookmark_detail),
 ]
