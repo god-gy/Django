@@ -5,9 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    <h1>To Do List</h1>
     <ul>
-        {% for todo in todolist %}
-            <li><a href="todoinfo/{{ pk }}">{{ todo.title }}</a></li>
+        {% for todo in todos %}
+            <li><a href="/todoinfo/{{ todo.id }}">{{ todo.title }}</a></li>
         {% endfor %}
     </ul>
 
