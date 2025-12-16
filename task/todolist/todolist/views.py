@@ -5,7 +5,11 @@ from .models import ToDoList
 
 def todo_list(request):
     todos = ToDoList.objects.all()
-    context = {'todos': todos}
+    request.session['count'] = request.session.get('count', 0) + 1
+    context = {
+        'todos': todos,
+        'count': request.session['count'],
+    }
     return render(request, 'todolist.html', context)
 
 def todo_info(request, pk):

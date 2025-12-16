@@ -13,5 +13,8 @@
     <p>완료여부 : {{ todo.is_complete }}</p>
     <p>생성일시 : {{ todo.created_at }}</p>
     <p>수정일시 : {{ todo.modified_at }}</p>
+    <hr>
+    <button type="submit" onclick="window.location.href='{% url 'todolist' %}'">뒤로가기</button>
+
 </body>
 </html>

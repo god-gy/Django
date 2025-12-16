@@ -43,6 +43,7 @@ DJANGO_APPS = [
 
 OWN_APPS = [
     'todolist',
+    'member',
 ]
 
 THIRD_PARTY_APPS = [
@@ -127,3 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# login
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/'
