@@ -1,7 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-# 제목, 본문, 작성자, 작성일자, 수정일자, 카테고리
-# 썸네일이미지, 태그 등도 있지만 일단 우린 윗줄만 함
+User = get_user_model()
 
 class Blog(models.Model):
     CATEGORY_CHOICES = (
@@ -14,7 +14,7 @@ class Blog(models.Model):
 
     title = models.CharField('제목', max_length=100)
     content = models.TextField('본문')
-    # author = models.ForeignKey() -> 추후에
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField('작성일자', auto_now_add=True)
     updated_at = models.DateTimeField('수정일자', auto_now=True)
 

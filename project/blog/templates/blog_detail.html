@@ -6,8 +6,12 @@
 </head>
 <body>
     <h1>{{ blog.title }}</h1>
+    <div style="text-align: right">
+        {{ blog.author.username }}
+    </div>
+    <hr>
     <p>{{ blog.content }}</p>
-
+    <hr>
     <a href="{% url 'blog_list' %}"> 목록으로 돌아가기 </a>
 </body>
 </html>
