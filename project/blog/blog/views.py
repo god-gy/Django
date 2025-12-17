@@ -1,13 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-import blog
 from blog.forms import BlogForm
 from blog.models import Blog
 
 
 def blog_list(request):
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.all().order_by('-created_at')
 
     visits = int(request.COOKIES.get('visits', 0)) +1
 
@@ -29,6 +29,7 @@ def blog_detail(request, pk):
 
     return render(request, 'blog_detail.html', context)
 
+@login_required()
 def blog_create(request):
     form = BlogForm(request.POST or None)
     if form.is_valid():
