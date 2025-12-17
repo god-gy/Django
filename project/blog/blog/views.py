@@ -1,5 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
+import blog
+from blog.forms import BlogForm
 from blog.models import Blog
 
 
@@ -25,3 +28,14 @@ def blog_detail(request, pk):
     context = {'blog': blog}
 
     return render(request, 'blog_detail.html', context)
+
+def blog_create(request):
+    form = BlogForm(request.POST or None)
+    if form.is_valid():
+        blog = form.save(commit=False)
+        blog.author = request.user
+        blog.save()
+        return redirect(reverse('blog_detail', kwargs={'pk': blog.pk}))
+
+    context = {'form': form}
+    return render(request, 'blog_create.html', context)
