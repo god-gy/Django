@@ -1,31 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <nav>
-        <div style="text-align: right">
-            {% if request.user.is_authenticated %}
-                <form action="{% url 'logout' %}" method="post" style="display: inline">
-                    {% csrf_token %}
-                    <button>로그아웃</button>
-                </form>
-            {% else %}
-                <script>
-                    window.location.href = "{% url 'login' %}";
-                </script>
-            {% endif %}
-        </div>
-    </nav>
-
+{% extends 'base.html' %}
+{% block content %}
     <h1>{{ request.user.username }}'s To Do List</h1>
     <ul>
         {% for todo in todos %}
             <li><a href="{% url 'todoinfo' todo.pk %}">{{ todo.title }}</a></li>
         {% endfor %}
     </ul>
-
-</body>
-</html>
+{% endblock %}

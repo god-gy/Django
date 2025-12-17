@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h1>{{ todo.title }} Page</h1>
     <hr>
     <p>본문 : {{ todo.description }}</p>
@@ -15,6 +10,4 @@
     <p>수정일시 : {{ todo.modified_at }}</p>
     <hr>
     <button type="submit" onclick="window.location.href='{% url 'todolist' %}'">뒤로가기</button>
-
-</body>
-</html>
+{% endblock %}
