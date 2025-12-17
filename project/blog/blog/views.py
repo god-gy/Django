@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
@@ -9,6 +10,13 @@ from blog.models import Blog
 
 def blog_list(request):
     blogs = Blog.objects.all().order_by('-created_at')
+
+    q = request.GET.get('q')
+    if q:
+        blogs = blogs.filter(
+            Q(title__icontains=q) |
+            Q(content__icontains=q)
+        )
 
     paginator = Paginator(blogs, 10)
     page= request.GET.get('page')
