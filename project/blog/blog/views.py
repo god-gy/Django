@@ -40,3 +40,17 @@ def blog_create(request):
 
     context = {'form': form}
     return render(request, 'blog_create.html', context)
+
+@login_required()
+def blog_update(request, pk):
+    blog = get_object_or_404(Blog, pk=pk, author=request.user)
+
+    form = BlogForm(request.POST or None, instance=blog)
+    if form.is_valid():
+        blog = form.save()
+        return redirect(reverse('blog_detail', kwargs={'pk': blog.pk}))
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'blog_update.html', context)
