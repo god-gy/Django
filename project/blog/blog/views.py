@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 
 from blog.forms import BlogForm
 from blog.models import Blog
@@ -58,3 +59,10 @@ def blog_update(request, pk):
         'form': form,
     }
     return render(request, 'blog_update.html', context)
+
+@login_required()
+@require_http_methods(['POST'])
+def blog_delete(request, pk):
+    blog = get_object_or_404(Blog, pk=pk, author=request.user)
+    blog.delete()
+    return redirect(reverse('blog_list'))
