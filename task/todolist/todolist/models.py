@@ -1,8 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+
+User = get_user_model()
 
 class ToDoList(models.Model):
     title = models.CharField('제목', max_length=50)
     description = models.TextField('설명')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_date = models.DateField('시작일')
     end_date = models.DateField('종료일')
     is_complete = models.BooleanField('완료여부', default=False)

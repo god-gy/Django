@@ -36,7 +36,7 @@ OWN_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    # 'django-extensions',
+    'django_extensions',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + OWN_APPS + THIRD_PARTY_APPS
