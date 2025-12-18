@@ -1,10 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.views.generic import ListView, DetailView
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from blog.models import Blog
 
 class BlogListView(ListView):
-    # model = Blog
     queryset = Blog.objects.all().order_by('-created_at')
     template_name = 'blog_list.html'
     paginate_by = 10
@@ -25,17 +27,23 @@ class BlogDetailView(DetailView):
     model = Blog
     template_name = 'blog_detail.html'
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     return queryset.filter(id__lte=50)
+class BlogCreateView(LoginRequiredMixin ,CreateView):
+    model = Blog
+    template_name = 'blog_create.html'
+    fields = ['title', 'content']
+    # success_url = reverse_lazy('cv_blog_list')
 
-    # def get_object(self, queryset=None):
-    #     object = super().get_object()
-    #     object = self.model.objects.get(pk=self.kwargs['pk'])
-    #     return object
+    def form_valid(self, form):
+        # self.object = form.save(commit=False)
+        # self.object.author = self.request.user
+        # self.object.save()
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['test'] = 'CBV'
-    #     return context
+        blog = form.save(commit=False)
+        blog.author = self.request.user
+        blog.save()
+        self.object = blog
 
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse_lazy('cv_blog_detail', kwargs={'pk': self.object.pk})
