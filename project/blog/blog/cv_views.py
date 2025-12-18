@@ -1,8 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.http import HttpResponseRedirect, Http404
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from blog.models import Blog
 
@@ -31,13 +30,8 @@ class BlogCreateView(LoginRequiredMixin ,CreateView):
     model = Blog
     template_name = 'blog_create.html'
     fields = ['title', 'content']
-    # success_url = reverse_lazy('cv_blog_list')
 
     def form_valid(self, form):
-        # self.object = form.save(commit=False)
-        # self.object.author = self.request.user
-        # self.object.save()
-
         blog = form.save(commit=False)
         blog.author = self.request.user
         blog.save()
@@ -45,5 +39,26 @@ class BlogCreateView(LoginRequiredMixin ,CreateView):
 
         return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self):
-        return reverse_lazy('cv_blog_detail', kwargs={'pk': self.object.pk})
+    # def get_success_url(self):
+    #     return reverse_lazy('cv_blog_detail', kwargs={'pk': self.object.pk})
+    # models에 정의
+
+class BlogUpdateView(LoginRequiredMixin ,UpdateView):
+    model = Blog
+    template_name = 'blog_update.html'
+    fields = ['title', 'content']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(author=self.request.user)
+
+    # def get_object(self, queryset = None):
+    #     self.object = super().get_object(queryset)
+    #
+    #     if self.object.author != self.request.user:
+    #         raise Http404()
+    #     return self.object
+
+    # def get_success_url(self):
+    #     return reverse_lazy('cv_blog_detail', kwargs={'pk': self.object.pk})
+    # models에 정의
