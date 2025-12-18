@@ -24,7 +24,8 @@ def blog_list(request):
     page_object= paginator.get_page(page)
 
     context = {
-        'page_object': page_object,
+        'object_list': page_object.object_list,
+        'page_obj': page_object,
     }
     return render(request, 'blog_list.html', context)
 
