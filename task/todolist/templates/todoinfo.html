@@ -9,7 +9,7 @@
             </form>
             <form action="{% url 'cbv:delete' todo.pk %}" method="post" style="display: inline">
                 {% csrf_token %}
-                <button>삭제하기</button>
+                <button type="submit">삭제하기</button>
             </form>
         {% endif %}
     </div>
