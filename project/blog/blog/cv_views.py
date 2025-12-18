@@ -47,6 +47,8 @@ class BlogUpdateView(LoginRequiredMixin ,UpdateView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if self.request.user.is_superuser:
+            return queryset
         return queryset.filter(author=self.request.user)
 
 class BlogDeleteView(LoginRequiredMixin ,DeleteView):
@@ -54,7 +56,9 @@ class BlogDeleteView(LoginRequiredMixin ,DeleteView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(author=self.request.user)
+        if not self.request.user.is_superuser:      # 이방법 추천
+            queryset = queryset.filter(author=self.request.user)
+        return queryset
 
     def get_success_url(self):
         return reverse_lazy('blog:list')
