@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from todolist.models import ToDoList
 
 
-class TodoListView(ListView):
+class TodoListView(LoginRequiredMixin, ListView):
     queryset = ToDoList.objects.all()
     template_name = 'todolist.html'
     paginate_by = 10
@@ -15,6 +15,10 @@ class TodoListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        if not self.request.user.is_superuser:
+            queryset = queryset.filter(user=self.request.user)
+
         q = self.request.GET.get('q')
         if q:
             queryset = queryset.filter(
@@ -31,7 +35,7 @@ class TodoDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         queryset = super().get_queryset()
         if not self.request.user.is_superuser:      # 이방법 추천
-            queryset = queryset.filter(author=self.request.user)
+            queryset = queryset.filter(user=self.request.user)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -65,7 +69,7 @@ class TodoDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         queryset = super().get_queryset()
         if not self.request.user.is_superuser:      # 이방법 추천
-            queryset = queryset.filter(author=self.request.user)
+            queryset = queryset.filter(user=self.request.user)
         return queryset
 
     def get_success_url(self):
