@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{{ blog.title }}</h1>
+    <h1>[{{ blog.get_category_display }}] {{ blog.title }}</h1>
 
     {% if request.user == blog.author or request.user.is_superuser %}
         <div style="text-align: right">

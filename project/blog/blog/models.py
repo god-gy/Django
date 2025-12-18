@@ -11,7 +11,8 @@ class Blog(models.Model):
         ('cat', '고양이'),
         ('dog', '강아지'),
     )
-    category = models.CharField('카테고리', max_length=10, choices=CATEGORY_CHOICES)
+    category = models.CharField('카테고리', max_length=10, choices=CATEGORY_CHOICES, default='free')
+    # shell_plus -> Blog.objects.filter(category='').update(category = 'free')
 
     title = models.CharField('제목', max_length=100)
     content = models.TextField('본문')

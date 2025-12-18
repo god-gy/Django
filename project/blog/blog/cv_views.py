@@ -30,7 +30,7 @@ class BlogDetailView(DetailView):
 class BlogCreateView(LoginRequiredMixin ,CreateView):
     model = Blog
     template_name = 'blog_create.html'
-    fields = ['title', 'content']
+    fields = ['category', 'title', 'content']
 
     def form_valid(self, form):
         blog = form.save(commit=False)
@@ -43,7 +43,7 @@ class BlogCreateView(LoginRequiredMixin ,CreateView):
 class BlogUpdateView(LoginRequiredMixin ,UpdateView):
     model = Blog
     template_name = 'blog_update.html'
-    fields = ['title', 'content']
+    fields = ['category', 'title', 'content']
 
     def get_queryset(self):
         queryset = super().get_queryset()
