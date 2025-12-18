@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from todolist.form import TodolistForm
+from todolist.form import TodolistForm, TodoUpdateForm
 from todolist.models import ToDoList
 
 @login_required()
@@ -53,7 +53,7 @@ def todo_create(request):
 def todo_update(request, pk):
     todo = get_object_or_404(ToDoList, pk=pk, user=request.user)
 
-    form = TodolistForm(request.POST or None, instance=todo)
+    form = TodoUpdateForm(request.POST or None, instance=todo)
     if form.is_valid():
         todo = form.save()
         return redirect(reverse('todoinfo', kwargs={'pk': todo.pk}))
