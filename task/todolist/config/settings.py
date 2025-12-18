@@ -119,6 +119,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # login
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/todo/'
 LOGIN_URL = '/accounts/login/'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/todo/'
