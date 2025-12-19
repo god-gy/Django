@@ -29,7 +29,7 @@ class BlogDetailView(DetailView):
 
 class BlogCreateView(LoginRequiredMixin ,CreateView):
     model = Blog
-    template_name = 'blog_create.html'
+    template_name = 'blog_form.html'
     fields = ['category', 'title', 'content']
 
     def form_valid(self, form):
@@ -40,10 +40,22 @@ class BlogCreateView(LoginRequiredMixin ,CreateView):
 
         return HttpResponseRedirect(self.get_success_url())
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sub_title'] = '작성'
+        context['btn_name'] = '생성'
+        return context
+
 class BlogUpdateView(LoginRequiredMixin ,UpdateView):
     model = Blog
-    template_name = 'blog_update.html'
+    template_name = 'blog_form.html'
     fields = ['category', 'title', 'content']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sub_title'] = '수정'
+        context['btn_name'] = '수정'
+        return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
