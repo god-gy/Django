@@ -39,3 +39,4 @@ class Comment(TimeStampedModel):
     class Meta:
         verbose_name = '댓글'
         verbose_name_plural = '댓글 목록'
+        ordering = ('-created_at', '-id')
