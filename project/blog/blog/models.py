@@ -22,7 +22,7 @@ class Blog(TimeStampedModel):
         return f'[{self.get_category_display()}] {self.title[:10]}'
 
     def get_absolute_url(self):
-        return reverse('blog:detail', kwargs={'pk': self.pk})
+        return reverse('blog:detail', kwargs={'blog_pk': self.pk})
 
     class Meta:
         verbose_name = 'blog'

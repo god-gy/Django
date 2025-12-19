@@ -1,10 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from blog.forms import CommentForm
 from blog.models import Blog, Comment
@@ -27,34 +26,24 @@ class BlogListView(ListView):
             )
         return queryset
 
-class BlogDetailView(DetailView):
-    model = Blog
-    queryset = Blog.objects.all().prefetch_related('comment_set', 'comment_set__author')
+class BlogDetailView(ListView):
+    model = Comment
+    # queryset = Blog.objects.all().prefetch_related('comment_set', 'comment_set__author')
     template_name = 'blog_detail.html'
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+        self.object = get_object_or_404(Blog, pk=kwargs.get('blog_pk'))
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return self.model.objects.filter(blog=self.object).prefetch_related('author')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
+        context['blog'] = self.object
         return context
-
-    # def post(self, *args, **kwargs):
-    #     comment_form = CommentForm(self.request.POST)
-    #
-    #     if not comment_form.is_valid():
-    #         self.object = self.get_object()
-    #         context = self.get_context_data(object=self.object)
-    #         context['comment_form'] = comment_form
-    #         return self.render_to_response(context)
-    #
-    #     if not self.request.user.is_authenticated:
-    #         raise Http404()
-    #
-    #     comment = comment_form.save(commit=False)
-    #     comment.blog_id = self.kwargs['pk']
-    #     comment.author = self.request.user
-    #     comment.save()
-    #
-    #     return HttpResponseRedirect(reverse_lazy('blog:detail', kwargs={'pk': self.kwargs['pk']}))
 
 class BlogCreateView(LoginRequiredMixin ,CreateView):
     model = Blog
@@ -117,7 +106,7 @@ class CommentCreateView(LoginRequiredMixin ,CreateView):
         self.object.author = self.request.user
         self.object.blog = blog
         self.object.save()
-        return HttpResponseRedirect(reverse_lazy('blog:detail', kwargs={'pk' : blog.pk}))
+        return HttpResponseRedirect(reverse_lazy('blog:detail', kwargs={'blog_pk' : blog.pk}))
 
     def get_blog(self):
         pk = self.kwargs['blog_pk']

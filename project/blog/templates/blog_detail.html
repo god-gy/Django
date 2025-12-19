@@ -20,17 +20,6 @@
     <p>{{ blog.content }}</p>
     <hr>
 
-    <div>
-        {% for comment in blog.comment_set.all %}
-            <div>
-                {{ comment.content }} <small>({{ comment.created_at|date:"Y.m.d H:i" }})</small>
-            <p class="text-end">
-                {{ comment.author.username }}
-            </p>
-            </div>
-        {% endfor %}
-    </div>
-
     {% if request.user.is_authenticated %}
         <form method="post" action="{% url 'blog:comment_create' blog.pk %}">
             {% csrf_token %}
@@ -41,6 +30,19 @@
         </form>
         <hr>
     {% endif %}
+
+    <div class="mb-3" id="comment_wrapper">
+        {% for comment in object_list %}
+            <div class="border-bottom">
+                {{ comment.content }} <small>({{ comment.created_at|date:"Y.m.d H:i" }})</small>
+            <p class="text-end">
+                {{ comment.author.username }}
+            </p>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include 'pagenation.html' with fragment='comment_wrapper' %}
 
     <a class="btn btn-sm btn-info" href="{% url 'blog:list' %}">목록</a>
 {% endblock %}
