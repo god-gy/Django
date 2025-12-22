@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import ToDoList
+from .models import ToDoList, Comment
+
+admin.site.register(Comment)
+
+class CommentInline(admin.TabularInline):
+    model = Comment
+    fields = ('user', 'massage')
+    extra = 1
 
 @admin.register(ToDoList)
 class ToDoListAdmin(admin.ModelAdmin):
@@ -8,3 +15,6 @@ class ToDoListAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'title')
     list_filter = ('is_complete',)
     ordering = ('start_date',)
+    inlines = [
+        CommentInline
+    ]
