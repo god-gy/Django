@@ -21,5 +21,17 @@
     <p>생성일시 : {{ todo.created_at }}</p>
     <p>수정일시 : {{ todo.modified_at }}</p>
     <hr>
+
+    <div class="mb-3" id="comment_wrapper">
+        {% for comment in page_obj %}
+            <div class="border-bottom">
+                {{ comment.massage }} <small>({{ comment.created_at|date:"Y.m.d H:i" }})</small>
+            <p class="text-end">
+                {{ comment.user.username }}
+            </p>
+            </div>
+        {% endfor %}
+    </div>
+
     <button type="submit" onclick="window.location.href='{% url 'cbv:list' %}'">목록보기</button>
 {% endblock %}
