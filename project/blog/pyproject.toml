@@ -11,6 +11,7 @@ django = "^6.0"
 dotenv = "^0.9.9"
 ipython = "^9.8.0"
 django-extensions = "^4.1"
+django-summernote = "^0.8.20.0"
 
 
 [build-system]

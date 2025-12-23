@@ -48,7 +48,8 @@ OWN_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    'django_extensions'
+    'django_extensions',
+    'django_summernote',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + OWN_APPS + THIRD_PARTY_APPS
@@ -134,6 +135,10 @@ STATICFILES_DIRS = [
     STATIC_DIR
 ]
 STATIC_ROOT = BASE_DIR / '.static_root'
+
+# media
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # login
 LOGIN_REDIRECT_URL = '/'
