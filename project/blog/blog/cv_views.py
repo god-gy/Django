@@ -1,3 +1,4 @@
+from IPython.core.release import author
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
@@ -69,17 +70,22 @@ class BlogUpdateView(LoginRequiredMixin ,UpdateView):
     template_name = 'blog_form.html'
     form_class = BlogForm
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.is_superuser:
+            return queryset
+        return queryset.filter(author=self.request.user)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sub_title'] = '수정'
         context['btn_name'] = '수정'
         return context
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        if self.request.user.is_superuser:
-            return queryset
-        return queryset.filter(author=self.request.user)
 
 class BlogDeleteView(LoginRequiredMixin ,DeleteView):
     model = Blog
