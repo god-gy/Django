@@ -29,7 +29,6 @@ class BlogListView(ListView):
 
 class BlogDetailView(ListView):
     model = Comment
-    # queryset = Blog.objects.all().prefetch_related('comment_set', 'comment_set__author')
     template_name = 'blog_detail.html'
     paginate_by = 10
 
@@ -77,7 +76,6 @@ class BlogUpdateView(LoginRequiredMixin ,UpdateView):
         return queryset.filter(author=self.request.user)
 
     def form_valid(self, form):
-        print(form.cleaned_data)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
