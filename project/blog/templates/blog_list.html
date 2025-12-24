@@ -10,8 +10,8 @@
   {% for blog in object_list %}
     <div class="my-2">
       <a href="{% url 'blog:detail' blog.pk %}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover row">
-        {% if blog.image %}
-          <img src="{{ blog.image.url }}" alt="" class="col-2">
+        {% if blog.thumbnail %}
+          <img src="{{ blog.get_thumbnail_image_url }}" alt="" class="col-2">
         {% endif %}
         <span class="col-10">
           [{{ blog.get_category_display }}] {{ blog.title }} - <small>{{ blog.created_at | date:"Y-m-d" }}</small>
