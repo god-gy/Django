@@ -5,4 +5,4 @@
 *.iml
 **/__pycache__/
 **/*initial.py
-**/.config_secret/*
+.config_secret/
