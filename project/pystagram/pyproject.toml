@@ -10,7 +10,6 @@ python = "^3.12"
 django = "^6.0"
 django-extensions = "^4.1"
 ipython = "^9.8.0"
-dotenv = "^0.9.9"
 
 [build-system]
 requires = ["poetry-core"]
