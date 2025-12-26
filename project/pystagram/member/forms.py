@@ -6,18 +6,34 @@ User = get_user_model()
 
 class SignUpForm(UserCreationForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in ('password1', 'password2'):
+            self.fields[field].widget.attrs['class'] = 'form-control'
+            self.fields[field].widget.attrs['placeholder'] = 'password'
+            if field == 'password1':
+                self.fields[field].label = '비밀번호'
+            else:
+                self.fields[field].label = '비밀번호 확인'
+
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('email', 'password1', 'password2')
+        fields = ('email', 'nickname')
         labels = {
             'email' : '이메일',
-            'password1' : '비밀번호',
-            'password2' : '비밀번호 확인',
+            'nickname' : '닉네임'
         }
         widgets = {
             'email' : forms.EmailInput(
                 attrs={
                     'placeholder' : 'example@example.com',
+                    'class' : 'form-control',
                 }
-            )
+            ),
+            'nickname' : forms.TextInput(
+                attrs={
+                    'placeholder' : 'nickname',
+                    'class' : 'form-control',
+                }
+            ),
         }
