@@ -8,4 +8,5 @@ urlpatterns = [
 
     # auth
     path('signup/', member_views.SignUpView.as_view(), name='signup'),
+    path('verify/', member_views.verify_email, name='verify'),
 ]
