@@ -127,3 +127,11 @@ STATIC_ROOT = BASE_DIR / '.static_root'
 
 # Auth
 AUTH_USER_MODEL = 'member.User'
+
+# EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = SECRET['email']['user']
+EMAIL_HOST_PASSWORD = SECRET['email']['password']
