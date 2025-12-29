@@ -28,6 +28,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
     is_active = models.BooleanField(default=False)
+    id = models.AutoField(primary_key=True)
     is_admin = models.BooleanField(default=False)
     nickname = models.CharField('nickname', max_length=20, unique=True)
 
