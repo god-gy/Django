@@ -69,4 +69,9 @@ class LoginView(FormView):
 
         user = form.user
         login(self.request, user)
+
+        next_page = self.request.GET.get('next')
+        if next_page:
+            return HttpResponseRedirect(next_page)
+
         return HttpResponseRedirect(self.get_success_url())
