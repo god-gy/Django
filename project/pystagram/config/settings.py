@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
     # own
     'member',
+    'post',
 
     # third party
     'django_extensions',
@@ -116,7 +117,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_DIR = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
@@ -124,6 +125,10 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / '.static_root'
+
+# Media
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Auth
 AUTH_USER_MODEL = 'member.User'

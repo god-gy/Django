@@ -75,3 +75,4 @@ class LoginView(FormView):
             return HttpResponseRedirect(next_page)
 
         return HttpResponseRedirect(self.get_success_url())
+
